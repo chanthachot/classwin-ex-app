@@ -1,24 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import RouteErrorPage from "./utils/RouteErrorPage";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate
+} from "react-router-dom";
+import Login from "./pages/Login"
+import Home from "./pages/Home"
+import Main from "./pages/Main"
+import SignUp from "./pages/SignUp"
+import PrivateRoutes from './utils/PrivateRoutes';
+import HomeLayout from './layouts/HomeLayout';
+import MainLayout from './layouts/MainLayout';
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { theme } from "./themes/theme";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <HomeLayout />,
+      children: [
+        { path: '/', element: <Navigate to="/home" /> },
+        { path: '/login', element: <Login /> },
+        { path: '/home', element: <Home /> },
+        { path: '/signup', element: <SignUp /> },
+      ],
+      errorElement: <RouteErrorPage />,
+    },
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: [
+        { path: '/main', element: <PrivateRoutes><Main /></PrivateRoutes> },
+      ],
+      errorElement: <RouteErrorPage />,
+    },
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline enableColorScheme />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </>
   );
 }
 
