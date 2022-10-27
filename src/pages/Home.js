@@ -16,7 +16,7 @@ export default function Home() {
     return (
         <Box display="flex">
             <Grid container>
-                <Grid container sx={{ height: { md: '50%', xs: '100%' } }} >
+                <Grid container sx={{ height: { md: '50vh', xs: '100%' } }} >
                     <Grid item xs={12} md={4}
                         sx={{
                             backgroundImage: 'url(https://source.unsplash.com/random)',
