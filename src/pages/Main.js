@@ -4,6 +4,8 @@ import { Grid, Paper, Stack, Typography } from '@mui/material';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Flag from 'react-world-flags'
+import FlagIcon from '@mui/icons-material/Flag';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 
 export default function Main() {
     const [countryWithCarsState, setCountryWithCarsState] = useState({})
@@ -117,41 +119,52 @@ export default function Main() {
     return (
         <>
             <Box p={2}>
-                <Paper elevation={5} sx={{ p: 3 }}>
-                    <Typography variant="h5" component="h1" gutterBottom>
+                <Paper elevation={5} sx={{ p: 3, backgroundColor: "#DCF5E3" }}>
+                    <Typography variant="h5" component="h1" gutterBottom sx={{ color: "#015249" }}>
                         Countries with Cars
                     </Typography>
 
                     {countryWithCarsState.countryWithCars &&
-                        <Typography variant="body1" gutterBottom>
-                            ประเทศทั้งหมด {countryWithCarsState.countryWithCars?.length} ประเทศ
-                        </Typography>
+                        <Stack spacing={1}>
+                            <Stack direction="row" spacing={1}>
+                                <FlagIcon sx={{ color: "#015249" }} />
+                                <Typography variant="body1" gutterBottom sx={{ color: "#015249" }}>
+                                    ประเทศทั้งหมด {countryWithCarsState.countryWithCars?.length} ประเทศ
+                                </Typography>
+                            </Stack>
+                            <Stack direction="row" spacing={1}>
+                                <DirectionsCarIcon sx={{ color: "#015249" }} />
+                                <Typography variant="body1" gutterBottom sx={{ color: "#015249" }}>
+                                    รถยนต์ทั้งหมด {countryWithCarsState.countryWithCars?.map(item => item.carsAll.length).reduce((a, b) => a + b, 0)} ยี่ห้อ
+                                </Typography>
+                            </Stack>
+                        </Stack>
                     }
 
                     <Grid container spacing={2} mt={1}>
                         <Grid item xs={12} md={6} lg={3}>
-                            <Paper elevation={3} sx={{ p: 2 }}>
-                                <Typography gutterBottom sx={{ fontSize: '18px', mb: 3 }}>แต่ละประเทศผลิตรถกี่ยี่ห้อ</Typography>
+                            <Paper elevation={3} sx={{ p: 2, backgroundColor: "#D1E8FC" }}>
+                                <Typography gutterBottom sx={{ fontSize: '18px', mb: 3, fontWeight: 'bold', color: "#051C64" }}>แต่ละประเทศผลิตรถกี่ยี่ห้อ</Typography>
                                 {countryWithCarsState.countryWithCars && countryWithCarsState.countryWithCars.map(item =>
-                                    <Typography>ประเทศ {item.country} : {item.carsAll.length} ยี่ห้อ</Typography>
+                                    <Typography sx={{ color: "#051C64" }}>ประเทศ {item.country} : {item.carsAll.length} ยี่ห้อ</Typography>
                                 )}
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={6} lg={9}>
-                            <Paper elevation={3} sx={{ p: 2 }}>
-                                <Typography gutterBottom sx={{ fontSize: '18px', mb: 3 }}>แต่ละประเทศมีรถยี่ห้ออะไรบ้าง</Typography>
+                            <Paper elevation={3} sx={{ p: 2, backgroundColor: "#ffeebc" }}>
+                                <Typography gutterBottom sx={{ fontSize: '18px', mb: 3, fontWeight: 'bold', color: "#7A4F01" }}>แต่ละประเทศมีรถยี่ห้ออะไรบ้าง</Typography>
                                 <Grid container spacing={2} >
                                     {countryWithCarsState.countryWithCars && countryWithCarsState.countryWithCars.map(item =>
                                         <Grid item xs={12} lg={4} display="flex">
-                                            <Paper elevation={2} sx={{ p: 2, width: "100%" }}>
+                                            <Paper elevation={2} sx={{ p: 2, width: "100%", backgroundColor: "#ffffef" }}>
                                                 <Stack direction="row" alignItems="center" spacing={1}>
-                                                    <Typography>ประเทศ {item.country}</Typography>
+                                                    <Typography sx={{ color: "#7A4F01" }}>ประเทศ {item.country}</Typography>
                                                     {FindFlag(item)}
                                                 </Stack>
                                                 <Grid container mt={1}>
                                                     {item.carsAll.map((item, index) =>
                                                         <Grid item xs={12} sm={6} key={index + 1}>
-                                                            <Typography>- {item}</Typography>
+                                                            <Typography sx={{ color: "#7A4F01" }}>- {item}</Typography>
                                                         </Grid>
                                                     )}
                                                 </Grid>
@@ -162,17 +175,17 @@ export default function Main() {
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <Paper elevation={2} sx={{ p: 2 }}>
-                                <Typography gutterBottom sx={{ fontSize: '18px', mb: 3 }}>USA ผลิตรถกี่ยี่ห้อ ยี่ห้ออะไรบ้าง</Typography>
+                            <Paper elevation={2} sx={{ p: 2, backgroundColor: "#D0F2FE" }}>
+                                <Typography gutterBottom sx={{ fontSize: '18px', mb: 3, fontWeight: 'bold', color: "#042979" }}>USA ผลิตรถกี่ยี่ห้อ ยี่ห้ออะไรบ้าง</Typography>
                                 {countryWithCarsState.countryWithCars && countryWithCarsState.countryWithCars.map(item => {
                                     if (item.country === "USA") {
                                         return (
                                             <>
-                                                <Typography>{item.carsAll.length} ยี่ห้อ</Typography>
+                                                <Typography sx={{ color: "#042979" }}>{item.carsAll.length} ยี่ห้อ</Typography>
                                                 <Grid container mt={1}>
                                                     {item.carsAll.map((item, index) =>
                                                         <Grid item xs={12} sm={6}>
-                                                            <Typography>- {item}</Typography>
+                                                            <Typography sx={{ color: "#042979" }}>- {item}</Typography>
                                                         </Grid>
                                                     )}
                                                 </Grid>
@@ -183,14 +196,14 @@ export default function Main() {
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <Paper elevation={2} sx={{ p: 2 }}>
-                                <Typography gutterBottom sx={{ fontSize: '18px', mb: 3 }}>รถยุโรปมีกี่ยี่ห้อ ยี่ห้ออะไรบ้าง</Typography>
+                            <Paper elevation={2} sx={{ p: 2, backgroundColor: "#FFE7D9" }}>
+                                <Typography gutterBottom sx={{ fontSize: '18px', mb: 3, fontWeight: 'bold', color: "#7A0B2E" }}>รถยุโรปมีกี่ยี่ห้อ ยี่ห้ออะไรบ้าง</Typography>
                                 <Typography>{countryWithCarsState.europeanCountryWithCars && countryWithCarsState.europeanCountryWithCars.length} ยี่ห้อ</Typography>
                                 <Grid container mt={1}>
                                     {countryWithCarsState.europeanCountryWithCars && countryWithCarsState.europeanCountryWithCars.map(item =>
                                         <>
                                             <Grid item xs={12} sm={6} md={4}>
-                                                <Typography gutterBottom>- {item}</Typography>
+                                                <Typography gutterBottom sx={{ color: "#7A0B2E" }}>- {item}</Typography>
                                             </Grid>
                                         </>
                                     )}
